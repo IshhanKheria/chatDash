@@ -10,3 +10,9 @@ export const deleteMessage = (messageId) =>
   client.delete(`/messages/${messageId}/delete/`);
 
 export const getConversations = () => client.get('/conversations/');
+
+export const getRooms = () => client.get('/rooms/');
+export const createRoom = (data) => client.post('/rooms/', data);
+export const getRoomDetail = (roomId) => client.get(`/rooms/${roomId}/`);
+export const getRoomMessages = (roomId, page = 1) => client.get(`/rooms/${roomId}/messages/?page=${page}`);
+export const addRoomMember = (roomId, userId) => client.post(`/rooms/${roomId}/members/`, { user_id: userId });

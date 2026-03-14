@@ -6,3 +6,4 @@ export const me = () => client.get('/auth/me');
 export const updateProfile = (data) => client.put('/auth/profile', data);
 export const searchUsers = (q) => client.get(`/auth/users/search?q=${encodeURIComponent(q)}`);
 export const listUsers = () => client.get('/auth/users');
+export const getOnlineUsers = () => client.get('/auth/users/online');
