@@ -98,3 +98,12 @@ def search_users(request):
 def list_users(request):
     users = User.objects.exclude(id=request.user.id).order_by('username')[:50]
     return Response({'success': True, 'users': UserSerializer(users, many=True).data})
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def online_users(request):
+    """Return list of currently online user IDs."""
+    from apps.chat.consumers import connected_users
+    online_ids = list(connected_users.keys())
+    return Response({'success': True, 'online_user_ids': online_ids})
