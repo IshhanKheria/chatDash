@@ -1,10 +1,23 @@
 import { useState } from 'react';
 import { searchUsers } from '../api/auth';
+import RoomPanel from './RoomPanel';
+import ProfileModal from './ProfileModal';
 
-export default function Sidebar({ user, conversations, allUsers, activeContact, onSelectContact, onLogout }) {
+export default function Sidebar({
+  user,
+  conversations,
+  allUsers,
+  activeContact,
+  onSelectContact,
+  onLogout,
+  onlineUsers,
+  activeRoom,
+  onSelectRoom,
+}) {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [searching, setSearching] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
 
   const handleSearch = async (e) => {
     const q = e.target.value;
@@ -30,11 +43,23 @@ export default function Sidebar({ user, conversations, allUsers, activeContact, 
     <div className="sidebar">
       <div className="sidebar-header">
         <div className="user-info">
-          <div className="avatar">{user?.username?.[0]?.toUpperCase()}</div>
-          <span className="username">{user?.username}</span>
+          <button
+            className="avatar"
+            onClick={() => setShowProfile(true)}
+            title="Edit profile"
+            style={{ border: 'none', cursor: 'pointer' }}
+          >
+            {user?.username?.[0]?.toUpperCase()}
+          </button>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <span className="username">{user?.username}</span>
+            <button className="profile-btn" onClick={() => setShowProfile(true)}>Edit profile</button>
+          </div>
         </div>
-        <button className="logout-btn" onClick={onLogout} title="Logout">⬡</button>
+        <button className="logout-btn" onClick={onLogout} title="Logout">&#x2B21;</button>
       </div>
+
+      {showProfile && <ProfileModal onClose={() => setShowProfile(false)} />}
 
       <div className="search-box">
         <input
@@ -66,9 +91,12 @@ export default function Sidebar({ user, conversations, allUsers, activeContact, 
             <div className="contact-info">
               <span className="contact-name">{contact.username}</span>
             </div>
+            <div className={`online-dot ${onlineUsers?.has(contact.id) ? 'online' : ''}`} />
           </div>
         ))}
       </div>
+
+      <RoomPanel onSelectRoom={onSelectRoom} activeRoom={activeRoom} />
     </div>
   );
 }
