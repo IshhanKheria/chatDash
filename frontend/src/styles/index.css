@@ -203,3 +203,66 @@ body { background: var(--bg); color: var(--text); height: 100vh; overflow: hidde
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+/* Online indicator */
+.online-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--border); flex-shrink: 0;
+}
+.online-dot.online { background: var(--success); }
+
+/* Room panel */
+.room-panel { border-top: 1px solid var(--border); padding: 0.5rem; }
+.room-panel-header { display: flex; align-items: center; justify-content: space-between; padding: 0.25rem 0.5rem; }
+.create-room-btn {
+  background: var(--primary); border: none; color: white; width: 22px; height: 22px;
+  border-radius: 50%; cursor: pointer; font-size: 1rem; line-height: 1; display: flex;
+  align-items: center; justify-content: center;
+}
+.create-room-form { padding: 0.5rem; display: flex; flex-direction: column; gap: 0.4rem; }
+.create-room-form input {
+  padding: 0.5rem; background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 6px; color: var(--text); font-size: 0.85rem;
+}
+.create-room-form button {
+  padding: 0.4rem; background: var(--primary); border: none; border-radius: 6px;
+  color: white; cursor: pointer; font-size: 0.85rem;
+}
+.room-icon {
+  width: 40px; height: 40px; border-radius: 50%; background: var(--surface2);
+  border: 1px solid var(--border); display: flex; align-items: center;
+  justify-content: center; font-weight: 700; color: var(--primary); font-size: 1.1rem;
+  flex-shrink: 0;
+}
+.member-count { font-size: 0.75rem; color: var(--text-muted); }
+.profile-btn {
+  background: none; border: none; cursor: pointer; padding: 0.2rem;
+  border-radius: 4px; color: var(--text-muted); font-size: 0.8rem;
+  transition: color 0.2s;
+}
+.profile-btn:hover { color: var(--text); }
+
+/* Modal */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+  display: flex; align-items: center; justify-content: center; z-index: 1000;
+}
+.modal-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; padding: 1.5rem; width: 100%; max-width: 400px;
+}
+.modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+.modal-header h3 { font-size: 1.1rem; }
+.modal-close { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1rem; }
+.success-banner {
+  background: rgba(72,187,120,0.15); border: 1px solid var(--success);
+  border-radius: 8px; padding: 0.7rem 1rem; color: var(--success);
+  margin-bottom: 1rem; font-size: 0.9rem;
+}
+
+/* Room conversation panel */
+.room-conversation-header { background: var(--surface2); }
+.room-badge {
+  padding: 0.2rem 0.5rem; background: var(--primary); border-radius: 12px;
+  font-size: 0.7rem; color: white; font-weight: 600;
+}
