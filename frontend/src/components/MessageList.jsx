@@ -7,7 +7,13 @@ function formatTime(ts) {
 
 function formatDate(ts) {
   const d = new Date(ts);
-  return d.toLocaleDateString([], { month: 'short', day: 'numeric' });
+  const today = new Date();
+  const yesterday = new Date(today);
+  yesterday.setDate(today.getDate() - 1);
+
+  if (d.toDateString() === today.toDateString()) return 'Today';
+  if (d.toDateString() === yesterday.toDateString()) return 'Yesterday';
+  return d.toLocaleDateString([], { weekday: 'long', month: 'short', day: 'numeric' });
 }
 
 export default function MessageList({ messages, currentUser, onEdit, onDelete }) {
@@ -34,7 +40,7 @@ export default function MessageList({ messages, currentUser, onEdit, onDelete })
   if (messages.length === 0) {
     return (
       <div className="messages-empty">
-        <p>No messages yet. Say hello!</p>
+        No messages yet — say hello!
       </div>
     );
   }
@@ -51,9 +57,15 @@ export default function MessageList({ messages, currentUser, onEdit, onDelete })
 
         return (
           <div key={msg.id}>
-            {showDate && <div className="date-divider">{dateStr}</div>}
+            {showDate && (
+              <div className="date-divider">
+                <span>{dateStr}</span>
+              </div>
+            )}
+
             <div className={`message-wrapper ${isMine ? 'mine' : 'theirs'}`}>
               <div className={`message-bubble ${msg.is_deleted ? 'deleted' : ''}`}>
+
                 {editingId === msg.id ? (
                   <div className="edit-form">
                     <input
@@ -70,17 +82,29 @@ export default function MessageList({ messages, currentUser, onEdit, onDelete })
                   </div>
                 ) : (
                   <span className="message-content">
-                    {msg.is_deleted ? <em>[Message deleted]</em> : msg.content}
+                    {msg.is_deleted ? <em style={{ opacity: 0.7 }}>This message was deleted</em> : msg.content}
                   </span>
                 )}
+
                 <div className="message-meta">
+                  {msg.is_edited && !msg.is_deleted && (
+                    <span className="edited-badge">edited</span>
+                  )}
                   <span className="message-time">{formatTime(msg.created_at)}</span>
-                  {msg.is_edited && !msg.is_deleted && <span className="edited-badge">edited</span>}
                 </div>
+
+                {/* Edit / Delete actions — shown on hover */}
                 {isMine && !msg.is_deleted && editingId !== msg.id && (
                   <div className="message-actions">
-                    <button className="action-btn" onClick={() => startEdit(msg)} title="Edit">✎</button>
-                    <button className="action-btn danger" onClick={() => onDelete(msg.id)} title="Delete">✕</button>
+                    <button className="action-btn" onClick={() => startEdit(msg)}>
+                      Edit
+                    </button>
+                    <button
+                      className="action-btn danger"
+                      onClick={() => onDelete(msg.id)}
+                    >
+                      Delete
+                    </button>
                   </div>
                 )}
               </div>

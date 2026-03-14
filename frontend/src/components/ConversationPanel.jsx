@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef } from 'react';
 import MessageList from './MessageList';
 import MessageComposer from './MessageComposer';
 
@@ -25,16 +25,19 @@ export default function ConversationPanel({
 
   return (
     <div className="conversation-panel">
+      {/* Header */}
       <div className="conversation-header">
-        <div className="contact-avatar large">{contact.username?.[0]?.toUpperCase()}</div>
+        <div className="contact-avatar large">
+          {contact.username?.[0]?.toUpperCase()}
+        </div>
         <div className="contact-details">
           <h3>{contact.username}</h3>
-          <span className="contact-email">{contact.email}</span>
+          <div className="contact-status">{contact.email}</div>
         </div>
       </div>
 
       {loading ? (
-        <div className="messages-loading">Loading messages...</div>
+        <div className="messages-loading">Loading messages…</div>
       ) : (
         <MessageList
           messages={messages}

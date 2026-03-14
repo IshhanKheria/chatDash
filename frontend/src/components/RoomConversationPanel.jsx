@@ -33,7 +33,7 @@ export default function RoomConversationPanel({
             <span className="room-badge" style={{ marginLeft: '0.5rem' }}>Room</span>
           </h3>
           {room.description && (
-            <span className="contact-email">{room.description}</span>
+            <span className="contact-status">{room.description}</span>
           )}
         </div>
       </div>
