@@ -19,8 +19,13 @@ media/
 
 # Environment
 .env
+.env.*
 .env.local
 .env.*.local
+**/.env
+**/.env.*
+!.env.example
+!**/.env.example
 venv/
 env/
 ENV/
