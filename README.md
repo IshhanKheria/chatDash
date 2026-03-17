@@ -79,6 +79,17 @@ chatDash/
 ```bash
 cd backend
 
+# Create a virtual environment
+python -m venv venv
+
+# Activate it
+# Windows PowerShell
+venv\Scripts\Activate.ps1
+# Windows CMD
+venv\Scripts\activate.bat
+# macOS/Linux
+source venv/bin/activate
+
 # Install dependencies
 pip install -r requirements.txt
 
